@@ -220,5 +220,35 @@
       "jeux/puissance4/JeuPuissance4.java",
       "jeux/JeuFactory.java"
     ]
+  },
+  "G.31": {
+    "titre": "Un objet par joueur",
+    "resume": "Une classe generique, ParJoueur<T>, remplace les champs jumeaux et les ternaires de JeuNim. Une Paire stockerait la meme chose ; celle-ci dit a qui appartient chaque element.",
+    "fichiers": [
+      "modele/ParJoueur.java",
+      "jeux/nim/JeuNim.java"
+    ]
+  },
+  "G.32": {
+    "titre": "Une fabrique sans switch",
+    "resume": "La fabrique range dans une Map la facon de fabriquer chaque jeu : un Supplier par type. Ajouter un jeu revient a ajouter une ligne au catalogue.",
+    "fichiers": [
+      "jeux/JeuFactory.java"
+    ]
+  },
+  "G.33": {
+    "titre": "Le Nim dans une fenetre",
+    "resume": "Une deuxieme porte d'entree, en JavaFX : vous contre la machine. Aucune classe du Nim ne change, et la boucle de JeuNim devient un tour par clic.",
+    "fichiers": [
+      "fenetre/FenetreNim.java",
+      "fenetre/LanceurFenetreNim.java"
+    ]
+  },
+  "G.34": {
+    "titre": "Des boutons qui savent quand se taire",
+    "resume": "Une IntegerProperty suit la pile ; le libelle et la desactivation de chaque bouton y sont lies. Plus aucun gestionnaire ne s'occupe de griser un bouton.",
+    "fichiers": [
+      "fenetre/FenetreNim.java"
+    ]
   }
 }

@@ -370,6 +370,43 @@ diagramme("g28.png", "Le jeu qui se joue seul — G.28.");
 s.push(saut());
 
 // =====================================================================
+s.push(h1("Septième partie — généricité et lambdas"));
+
+increment("G.31", "Un objet par joueur");
+s.push(runs([
+  { t: "La classe est immuable, et c'est un choix. ", b: true },
+  "Configurer les stratégies remplace la ParJoueur entière au lieu de modifier l'une de ses moitiés : il n'existe jamais d'état où une stratégie est neuve et l'autre ancienne."
+]));
+s.push(p("La bataille garde ses deux pioches en paramètres jumeaux. Le corrigé n'y touche pas : les méthodes de V0 et V1 les reçoivent séparément, et les regrouper déplacerait la question sans la simplifier. C'est la dernière question de l'énoncé, et les deux réponses se défendent."));
+classe(`${RACINE}/modele/ParJoueur.java`);
+
+increment("G.32", "Une fabrique sans switch");
+s.push(runs([
+  { t: "Un Supplier et non un Jeu, ", b: true },
+  "parce qu'un jeu a un état : les stratégies configurées d'un Nim. Ranger un jeu tout fait dans la Map ferait jouer la deuxième partie avec la configuration de la première."
+]));
+s.push(p("Le test du null remplace le default du switch. Toutes les valeurs de TypeJeu ont un jeu, il ne sert donc à rien aujourd'hui ; il coûte trois lignes et protège le jour où une valeur s'ajoute sans sa ligne au catalogue."));
+classe(`${RACINE}/jeux/JeuFactory.java`);
+s.push(saut());
+
+// =====================================================================
+s.push(h1("Huitième partie — une fenêtre"));
+
+increment("G.33 et G.34", "Le Nim dans une fenêtre, et des boutons liés à la pile");
+s.push(runs([
+  { t: "Une deuxième porte d'entrée. ", b: true },
+  "La fenêtre ne s'ouvre pas depuis le menu du hub : il faudrait démarrer JavaFX à la main, sur un autre fil. C'est une application à part, avec son lanceur."
+]));
+s.push(runs([
+  { t: "Quatorze allumettes et non treize. ", b: true },
+  "Contre la stratégie maligne, celui qui commence à treize perd toujours ; à quatorze, le joueur peut gagner en jouant juste."
+]));
+s.push(p("La méthode pileAChange est le seul endroit où l'écran apprend que la pile a changé. En G.33 elle écrit le libellé ; en G.34 elle met à jour la propriété, et c'est tout ce qui change dans la logique. Les touches du clavier contournent les boutons grisés : c'est le test des règles, au début du tour, qui garde le programme juste."));
+classe(`${RACINE}/fenetre/FenetreNim.java`);
+classe(`${RACINE}/fenetre/LanceurFenetreNim.java`);
+s.push(saut());
+
+// =====================================================================
 s.push(h1("Les classes de test"));
 s.push(p("Trois classes de test accompagnent le corrigé. Elles ne sont pas demandées par les énoncés, mais elles démontrent ce que les incréments cherchent à faire comprendre."));
 

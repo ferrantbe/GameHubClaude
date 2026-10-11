@@ -28,8 +28,10 @@
     </properties>
 
     <dependencies>
-        <!-- Le demineur de G.29 ouvre une fenetre : c'est le seul endroit du
-             fil rouge qui demande JavaFX. -->
+        <!-- La fenetre du Nim (G.33 et G.34, package fenetre) est le seul
+             endroit du fil rouge qui demande JavaFX. Elle se lance par
+             LanceurFenetreNim, qui n'herite pas d'Application : voir
+             TEC-FX.4. Le hub console n'en depend pas. -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

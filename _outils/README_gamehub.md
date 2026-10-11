@@ -81,7 +81,7 @@ switch n'arrive qu'à G.18.
 ## Quand vous modifiez le code
 
 ```
-python3 _outils/etats_gamehub.py --verifier     compile les 29 états
+python3 _outils/etats_gamehub.py --verifier     compile les 34 états
 node _outils/build_gamehub_solutions.js         le corrigé final
 node _outils/build_gamehub_par_question.js      le corrigé pas à pas
 ```
@@ -92,9 +92,14 @@ node _outils/build_gamehub_par_question.js      le corrigé pas à pas
 **compile** avec le compilateur du JDK. C'est la seule preuve qui vaille : un
 marqueur mal posé se voit immédiatement.
 
-**Les trente états compilent, tous.** C'est le bénéfice de la sortie du
-démineur : le fil rouge ne dépend plus de JavaFX, et plus aucun état n'échappe
-au contrôle.
+**Les trente-deux premiers états compilent, tous.** C'est le bénéfice de la
+sortie du démineur : jusqu'à `G.32`, le fil rouge ne dépend plus de JavaFX, et
+aucun de ces états n'échappe au contrôle.
+
+À partir de `G.33`, la fenêtre du Nim emploie JavaFX. Ces états ne se compilent
+que si les bibliothèques sont disponibles ; sinon le script les signale et les
+saute. C'est la seule exception, et elle est circonscrite au package
+`fenetre`.
 
 Compiler ne dit rien de la justesse : un état peut compiler et ne pas
 correspondre à ce que l'énoncé demandait. Mais un état qui ne compile pas est

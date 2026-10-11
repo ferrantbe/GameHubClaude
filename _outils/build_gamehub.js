@@ -83,7 +83,8 @@ g.push(...code([
   "be.ephec.gamehub                  GameHub, le point d'entree",
   "be.ephec.gamehub.modele           Joueur, Partie, TypeJeu, ResultatPartie",
   "be.ephec.gamehub.jeux             l'interface Jeu, la fabrique, les jeux",
-  "be.ephec.gamehub.observateurs     ObservateurPartie, JournalParties"
+  "be.ephec.gamehub.observateurs     ObservateurPartie, JournalParties",
+  "be.ephec.gamehub.fenetre          la fenetre du Nim et son lanceur (G.33)"
 ]));
 g.push(h2("Ce que le fil rouge apporte"));
 g.push(p("Chaque incrément met en œuvre ce que vous venez de voir en cours, mais dans un programme qui existe déjà. C'est la différence essentielle avec les exercices : il faut faire entrer une idée neuve dans du code écrit avant elle."));
@@ -94,7 +95,9 @@ g.push(tableau(["Incréments", "Ce qu'ils mettent en œuvre"], [
   ["G.14 à G.20", "interfaces, fabrique, stratégies, découplage"],
   ["G.21 à G.27", "collections, files, comparaisons"],
   ["G.28", "quand l'abstraction ne suffit plus"],
-  ["G.29 et G.30", "héritage bien placé : deux jeux de grille, un seul algorithme"]
+  ["G.29 et G.30", "héritage bien placé : deux jeux de grille, un seul algorithme"],
+  ["G.31 et G.32", "généricité et lambdas : une paire qui a un sens, une fabrique sans switch"],
+  ["G.33 et G.34", "JavaFX : le Nim dans une fenêtre, puis des boutons liés à la pile"]
 ], [2600, 6760], [0]));
 g.push(saut());
 
@@ -710,11 +713,172 @@ g.push(runs([
 
 diagramme("g30.png", "Deux jeux, deux grilles, un seul algorithme d'alignement. Les deux traits pleins vont chacun vers la classe mère, pas l'un vers l'autre.");
 
+
+// =====================================================================
+g.push(saut());
+g.push(h1("Septième partie — des paires qui ont un sens, une fabrique sans switch"));
+g.push(p("Deux incréments courts, qui ne font apparaître aucun jeu. Ils reprennent du code écrit depuis longtemps avec deux outils neufs : la généricité, puis les lambdas."));
+
+increment("G.31", "Un objet par joueur");
+g.push(h2("Ce qui se répète"));
+g.push(runs([
+  "Relisez ", { t: "JeuNim", code: true }, ". Il garde deux champs jumeaux, ",
+  { t: "strategieJoueur1", code: true }, " et ", { t: "strategieJoueur2", code: true },
+  ", et choisit le bon par un opérateur ternaire. Quelques lignes plus bas, le même ternaire choisit le joueur. La bataille fait pareil avec ses deux pioches."
+]));
+g.push(h2("Ce qu'on vous demande"));
+g.push(runs([
+  "Écrivez dans ", { t: "modele", code: true }, " une classe générique ",
+  { t: "ParJoueur<T>", code: true }, ", immuable, qui garde une chose pour chaque joueur."
+]));
+g.push(tableau(["Membre", "Ce qu'il fait"], [
+  ["ParJoueur(T duPremier, T duSecond)", "reçoit les deux éléments"],
+  ["duPremier(), duSecond()", "rendent chacun le sien"],
+  ["selon(boolean auTourDuPremier)", "rend celui du joueur dont c'est le tour"]
+], [4200, 5160], [0]));
+g.push(runs([
+  "Introduisez-la ensuite dans ", { t: "JeuNim", code: true },
+  " : un champ ", { t: "ParJoueur<StrategieNim>", code: true },
+  " remplace les deux stratégies, et une variable ", { t: "ParJoueur<Joueur>", code: true },
+  " remplace le choix du joueur dans ", { t: "jouer", code: true },
+  ". Les deux ternaires disparaissent."
+]));
+g.push(h2("Vérification"));
+g.push(p("Le Nim se joue exactement comme avant : mêmes stratégies, mêmes coups, mêmes résultats. Un incrément qui ne change pas le comportement se vérifie en comparant deux parties."));
+g.push(h2("Questions à se poser"));
+g.push(bulletRuns([
+  "Une ", { t: "Paire<T>", code: true },
+  " stockerait exactement la même chose. Que dit ", { t: "ParJoueur", code: true },
+  " de plus ? Voir ", { t: "CC-NOM.1", code: true }, "."
+]));
+g.push(bullet("La même classe sert pour des stratégies et pour des joueurs, sans un seul transtypage. Combien de classes aurait-il fallu sans la généricité ?"));
+g.push(bullet("La bataille passe ses deux pioches en paramètres jumeaux à plusieurs méthodes. Faut-il y introduire ParJoueur aussi ? Dites ce que cela coûterait, et ce que cela rapporterait, avant de décider."));
+
+increment("G.32", "Une fabrique sans switch");
+g.push(h2("Ce qui se répète"));
+g.push(runs([
+  "Le ", { t: "switch", code: true }, " de ", { t: "JeuFactory", code: true },
+  " associe chaque type de jeu à la façon d'en fabriquer un. Ajouter un jeu, c'est ajouter un cas, et un cas n'est rien d'autre qu'une association : ce type, ce constructeur."
+]));
+g.push(h2("Ce qu'on vous demande"));
+g.push(runs([
+  "Rangez ces associations dans une ", { t: "Map<TypeJeu, Supplier<Jeu>>", code: true },
+  ", un champ constant construit par ", { t: "Map.of", code: true },
+  ". La méthode ", { t: "creer", code: true },
+  " ne fait plus que chercher la fabrication du type demandé et l'exécuter. Si elle n'en trouve pas, elle lève la même exception qu'avant."
+]));
+g.push(...code([
+  "TypeJeu.MORPION, JeuMorpion::new,",
+  "TypeJeu.NIM, () -> new JeuNim(ALLUMETTES_NIM, new ReglesNim()),"
+]));
+g.push(runs([
+  "Une référence de constructeur suffit pour un jeu sans paramètre ; le Nim, qui en a deux, demande une lambda. Les deux sont des ",
+  { t: "Supplier<Jeu>", code: true }, "."
+]));
+g.push(h2("Vérification"));
+g.push(p("Chaque jeu du menu se lance comme avant. Lancez-en au moins deux, dont le Nim."));
+g.push(h2("Questions à se poser"));
+g.push(bullet("Pourquoi ranger la façon de fabriquer un jeu, et pas le jeu lui-même ? Pensez à ce qui arriverait à la deuxième partie de Nim, une fois le premier jeu configuré."));
+g.push(bulletRuns([
+  "Le ", { t: "default", code: true },
+  " du switch protégeait contre une valeur sans jeu. Qu'est-ce qui la protège maintenant ?"
+]));
+g.push(bulletRuns([
+  "La question de ", { t: "G.17", code: true },
+  " vous promettait le thème LAM : ", { t: "StrategieNim", code: true },
+  " est une interface fonctionnelle. Écrivez ", { t: "StrategieTimide", code: true },
+  " en une lambda. Où pourrait-elle vivre, maintenant que vous savez ranger des comportements dans une Map ?"
+]));
+
+// =====================================================================
+g.push(saut());
+g.push(h1("Huitième partie — une fenêtre"));
+g.push(runs([
+  "GameHub est une application console. Ouvrir une fenêtre depuis son menu obligerait à démarrer JavaFX à la main, sur un autre fil d'exécution : trois notions hors programme pour un seul jeu. La fenêtre est donc une ",
+  { t: "deuxième porte d'entrée", b: true },
+  ", une application à part qu'on lance directement, dans un package ",
+  { t: "be.ephec.gamehub.fenetre", code: true }, ". Le hub console ne change pas."
+]));
+g.push(runs([
+  "Comme dans les exercices du thème FX, la classe à lancer n'est pas celle qui hérite d'",
+  { t: "Application", code: true }, ", mais son lanceur, qui vous est donné. Voir ",
+  { t: "TEC-FX.4", code: true }, "."
+]));
+g.push(...code([
+  "public class LanceurFenetreNim {",
+  "    public static void main(String[] args) {",
+  "        Application.launch(FenetreNim.class, args);",
+  "    }",
+  "}"
+]));
+
+increment("G.33", "Le Nim dans une fenêtre");
+g.push(p("Une partie contre la machine. Vous commencez, à quatorze allumettes ; la machine joue la stratégie maligne. Celui qui prend la dernière a perdu."));
+g.push(tableau(["Élément", "Rôle"], [
+  ["un Label", "le nombre d'allumettes restantes"],
+  ["trois Button « Prendre 1 » à « Prendre 3 »", "votre coup ; un par retrait permis par les règles"],
+  ["les touches 1, 2 et 3", "la même chose, au clavier"],
+  ["un second Label", "le coup de la machine, puis le résultat"]
+], [4200, 5160], [0]));
+g.push(h2("La contrainte qui compte"));
+g.push(runs([
+  { t: "Aucune classe du Nim ne change. ", b: true },
+  "Pile, ReglesNim et les stratégies sont reprises telles quelles : elles ne savaient rien de la console, elles ne savent rien de la fenêtre."
+]));
+g.push(runs([
+  "En revanche, ", { t: "JeuNim", code: true },
+  " ne vous servira pas. Sa méthode ", { t: "jouer", code: true },
+  " est une boucle qui va jusqu'au bout de la partie sans jamais s'arrêter. Une fenêtre ne peut pas l'attendre : elle doit jouer un tour à chaque clic, puis rendre la main."
+]));
+g.push(h2("Deux conseils"));
+g.push(runs([
+  "Un clic du joueur fait tout un tour : son coup, puis, si la partie continue, celui de la machine. Écrivez-le dans une méthode, et faites-la appeler par les boutons ",
+  { t: "et", i: true }, " par le gestionnaire de clavier."
+]));
+g.push(runs([
+  "Comme ", { t: "JeuNim", code: true },
+  ", ne faites pas confiance à la stratégie de la machine : vérifiez son coup auprès des règles. Et prévoyez un seul endroit, une méthode, où l'écran apprend que la pile a changé. L'incrément suivant en aura besoin."
+]));
+g.push(h2("Ce que vous devez observer"));
+g.push(bullet("la fenêtre s'ouvre sur « 14 allumettes » ;"));
+g.push(bullet("chaque clic ou chaque touche retire vos allumettes, puis la machine joue et annonce son coup ;"));
+g.push(bullet("un coup impossible, trois allumettes quand il en reste deux, est refusé avec un message, sans planter ;"));
+g.push(bullet("la partie annonce qui a perdu, et en jouant juste vous pouvez gagner."));
+g.push(h2("Questions à se poser"));
+g.push(bullet("La boucle while de JeuNim n'apparaît nulle part dans votre code. Où est-elle passée ?"));
+g.push(bullet("Pourquoi les stratégies se réutilisent-elles sans une ligne changée, alors que JeuNim ne se réutilise pas du tout ?"));
+g.push(bullet("Les boutons qui prendraient plus d'allumettes qu'il n'en reste devraient être grisés. Où écririez-vous cette règle, et combien de fois ?"));
+
+increment("G.34", "Des boutons qui savent quand se taire");
+g.push(p("La réponse à la dernière question : une fois par bouton, et dans aucun gestionnaire."));
+g.push(h2("Ce qu'on vous demande"));
+g.push(runs([
+  "Ajoutez à la fenêtre une ", { t: "IntegerProperty", code: true },
+  " qui suit le nombre d'allumettes restantes. La méthode où l'écran apprenait que la pile avait changé ne met plus à jour le libellé : elle met à jour la propriété."
+]));
+g.push(runs([
+  "Puis liez. Le texte du libellé, par ", { t: "asString", code: true },
+  ". Et la désactivation de chaque bouton, par une seule instruction : celui qui prend ",
+  { t: "n", i: true }, " allumettes est grisé quand il en reste moins de ", { t: "n", i: true }, "."
+]));
+g.push(...code([
+  "bouton.disableProperty().bind(restantes.lessThan(nombre));"
+]));
+g.push(h2("Ce que vous devez observer"));
+g.push(bullet("le libellé affiche le bon nombre dès l'ouverture, sans ligne pour l'initialiser ;"));
+g.push(bullet("à deux allumettes restantes, « Prendre 3 » est grisé ; à une, « Prendre 2 » aussi ;"));
+g.push(bullet("à la fin de la partie, les trois boutons sont grisés ;"));
+g.push(bullet("la machine et vous jouez exactement comme à l'incrément précédent."));
+g.push(h2("Questions à se poser"));
+g.push(bullet("Pourquoi tous les boutons sont-ils grisés à la fin, alors que vous n'avez écrit aucune condition « partie finie » ?"));
+g.push(bullet("La propriété vit dans la fenêtre, pas dans Pile. Qu'aurait-on gagné, et perdu, à la mettre dans Pile ?"));
+g.push(bullet("Les touches 1, 2 et 3 ignorent les boutons grisés. Votre programme reste-t-il juste ? Qu'est-ce qui le protège ?"));
+
 g.push(saut());
 g.push(h1("La vue d'ensemble"));
 g.push(p("Au terme du fil rouge, huit packages. Les flèches se lisent « dépend de » : remarquez qu'aucune ne remonte vers le hub, et qu'aucun package de jeu n'en connaît un autre."));
 diagramme("ensemble.png", "Ajouter un jeu, c'est ajouter un package et un cas dans la fabrique. Rien d'autre.");
-g.push(p("C'est le résultat de trente incréments, et la seule chose qu'il faut en retenir : une dépendance qu'on n'a pas créée est une dépendance qu'on n'aura pas à défaire."));
+g.push(p("C'est le résultat de trente-quatre incréments, et la seule chose qu'il faut en retenir : une dépendance qu'on n'a pas créée est une dépendance qu'on n'aura pas à défaire."));
 
 Packer.toBuffer(doc(g, "Fil rouge GameHub")).then(b => {
   fs.writeFileSync(__dirname + "/../_documents/GameHub_enonces.docx", b);

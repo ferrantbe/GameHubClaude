@@ -28,8 +28,19 @@ un autre fil d'exécution, et à faire attendre le premier. Trois notions hors
 programme, pour un seul jeu.
 
 Le démineur a donc son propre projet, `DemineurClaude`, où il a retrouvé la
-forme ordinaire d'une application JavaFX. GameHub y a gagné : **il ne dépend
-plus de JavaFX du tout**, et ses trente états se compilent tous.
+forme ordinaire d'une application JavaFX. GameHub y a gagné : **le hub console
+ne dépend plus de JavaFX du tout**.
+
+JavaFX revient pourtant au thème FX, et par une autre porte. La fenêtre du Nim
+(`G.33` et `G.34`) n'est pas ouverte depuis le menu du hub : c'est une
+application à part, `FenetreNim`, avec son propre lanceur, dans le package
+`fenetre`. Elle réutilise les classes du Nim sans les modifier, et le hub
+console reste ce qu'il était. Le `pom.xml` déclare donc `javafx-controls`, pour
+ces deux classes seulement.
+
+Conséquence pour le contrôle : les états qui contiennent la fenêtre, à partir
+de `G.33`, ne peuvent être compilés que sur une machine où JavaFX est
+disponible. `etats_gamehub.py --verifier` les signale et les saute ailleurs.
 
 ## Pourquoi ce projet est séparé du recueil d'exercices
 
@@ -45,7 +56,7 @@ recueil à héberger cinq outils qui ne le concernaient pas.
 
 ```
 python3 _outils/diagrammes_gamehub.py       les diagrammes
-python3 _outils/etats_gamehub.py --verifier  compile les 29 états
+python3 _outils/etats_gamehub.py --verifier  compile les 34 états
 python3 _outils/depot_gamehub.py            le dépôt Git
 node _outils/build_gamehub.js               les énoncés
 node _outils/build_gamehub_solutions.js     le corrigé final

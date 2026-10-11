@@ -188,7 +188,15 @@ const ETAPES = [
    "GrilleAlignement ne sert encore qu'au morpion. Écrire la recherche d'alignement ici plutôt que dans GrilleMorpion n'est pas de l'anticipation en l'air : le second jeu de grille arrive à la page suivante."],
   ["G.30", "Le puissance 4, presque gratuit", ["jeux/puissance4/GrillePuissance4.java",
     "jeux/puissance4/JeuPuissance4.java", "jeux/JeuFactory.java"],
-   "Trente lignes pour un jeu entier. Tout ce qui manque a été écrit une fois, pour un jeu qui n'avait ni la même taille ni la même règle."]
+   "Trente lignes pour un jeu entier. Tout ce qui manque a été écrit une fois, pour un jeu qui n'avait ni la même taille ni la même règle."],
+  ["G.31", "Un objet par joueur", ["modele/ParJoueur.java", "jeux/nim/JeuNim.java"],
+   "Les deux ternaires de JeuNim disparaissent. La même classe générique garde deux stratégies et deux joueurs, sans un transtypage."],
+  ["G.32", "Une fabrique sans switch", ["jeux/JeuFactory.java"],
+   "Chaque cas du switch était une association : ce type, cette façon de fabriquer. La Map les range, et creer ne fait plus que chercher."],
+  ["G.33", "Le Nim dans une fenêtre", ["fenetre/FenetreNim.java", "fenetre/LanceurFenetreNim.java"],
+   "Pile, ReglesNim et les stratégies servent sans une ligne changée. JeuNim, lui, ne sert pas : sa boucle est devenue un tour par clic."],
+  ["G.34", "Des boutons qui savent quand se taire", ["fenetre/FenetreNim.java"],
+   "Une propriété suit la pile, et chaque bouton se désactive par un binding. La règle est écrite une fois par bouton, dans aucun gestionnaire."]
 ];
 
 const DIAGRAMMES = {

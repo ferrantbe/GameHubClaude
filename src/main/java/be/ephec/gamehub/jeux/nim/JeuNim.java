@@ -3,13 +3,14 @@ package be.ephec.gamehub.jeux.nim;
 import be.ephec.gamehub.jeux.Jeu;
 import be.ephec.gamehub.jeux.JeuConfigurable;   //@G.20
 import be.ephec.gamehub.modele.Joueur;
+import be.ephec.gamehub.modele.ParJoueur;   //@G.31
 import be.ephec.gamehub.modele.ResultatPartie;
 import be.ephec.gamehub.modele.TypeJeu;
 
 import java.util.Scanner;   //@G.20
 
 /**
- * G.18 et G.20 — CORRIGE.
+ * G.18, G.20 et G.31 — CORRIGE.
  *
  * Le premier jeu concret du hub. Il implemente DEUX interfaces, et
  * chacune dit quelque chose de different :
@@ -35,8 +36,10 @@ public class JeuNim implements Jeu, JeuConfigurable {   //@G.20
     private final int allumettesInitiales;
     private final ReglesNim regles;
 
-    private StrategieNim strategieJoueur1 = new StrategieTimide();
-    private StrategieNim strategieJoueur2 = new StrategieTimide();
+    //@G.18-G.30 private StrategieNim strategieJoueur1 = new StrategieTimide();
+    //@G.18-G.30 private StrategieNim strategieJoueur2 = new StrategieTimide();
+    private ParJoueur<StrategieNim> strategies =   //@G.31
+            new ParJoueur<>(new StrategieTimide(), new StrategieTimide());   //@G.31
 
     public JeuNim(int allumettesInitiales, ReglesNim regles) {
         this.allumettesInitiales = allumettesInitiales;
@@ -55,8 +58,10 @@ public class JeuNim implements Jeu, JeuConfigurable {   //@G.20
     //@G.20
     @Override
     public void configure(Scanner entree) {
-        strategieJoueur1 = demanderStrategie(entree, "premier");
-        strategieJoueur2 = demanderStrategie(entree, "second");
+        //@G.20-G.30 strategieJoueur1 = demanderStrategie(entree, "premier");
+        //@G.20-G.30 strategieJoueur2 = demanderStrategie(entree, "second");
+        strategies = new ParJoueur<>(demanderStrategie(entree, "premier"),   //@G.31
+                demanderStrategie(entree, "second"));   //@G.31
     }
 
     //@G.20
@@ -85,14 +90,17 @@ public class JeuNim implements Jeu, JeuConfigurable {   //@G.20
     @Override
     public ResultatPartie jouer(Joueur joueur1, Joueur joueur2) {
         Pile pile = new Pile(allumettesInitiales);
+        ParJoueur<Joueur> joueurs = new ParJoueur<>(joueur1, joueur2);   //@G.31
         boolean auTourDuPremier = true;
 
         System.out.println("\n" + allumettesInitiales
                 + " allumettes. Celui qui retire la derniere a perdu.");
 
         while (!pile.estVide()) {
-            StrategieNim strategie = auTourDuPremier ? strategieJoueur1 : strategieJoueur2;
-            Joueur joueur = auTourDuPremier ? joueur1 : joueur2;
+            //@G.18-G.30 StrategieNim strategie = auTourDuPremier ? strategieJoueur1 : strategieJoueur2;
+            //@G.18-G.30 Joueur joueur = auTourDuPremier ? joueur1 : joueur2;
+            StrategieNim strategie = strategies.selon(auTourDuPremier);   //@G.31
+            Joueur joueur = joueurs.selon(auTourDuPremier);   //@G.31
 
             int retire = coupValide(strategie, pile);
             pile.retirer(retire);
