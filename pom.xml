@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Le fil rouge GameHub, separe du recueil d'exercices.
+
+         Pourquoi separe. Il n'obeit pas aux memes regles : sa numerotation
+         est sequentielle et non thematique, il traverse toute l'annee au lieu
+         d'appartenir a une seance, et il produit ses propres documents ainsi
+         qu'un depot Git par increment.
+
+         Ce projet contient la SOURCE annotee, et elle seule est ecrite a la
+         main. Les deux corriges, les diagrammes et le depot en sont derives.
+         Voir _outils/README_gamehub.md avant toute modification. -->
+
+    <groupId>be.ephec.java</groupId>
+    <artifactId>gamehub</artifactId>
+    <version>2026.2027</version>
+    <packaging>jar</packaging>
+    <name>Fil rouge GameHub</name>
+
+    <properties>
+        <maven.compiler.release>21</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>21.0.2</javafx.version>
+    </properties>
+
+    <dependencies>
+        <!-- Le demineur de G.29 ouvre une fenetre : c'est le seul endroit du
+             fil rouge qui demande JavaFX. -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.2</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>
