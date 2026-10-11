@@ -81,7 +81,7 @@ switch n'arrive qu'à G.18.
 ## Quand vous modifiez le code
 
 ```
-python3 _outils/etats_gamehub.py --verifier     compile les 34 états
+python3 _outils/etats_gamehub.py --verifier     compile les 35 états
 node _outils/build_gamehub_solutions.js         le corrigé final
 node _outils/build_gamehub_par_question.js      le corrigé pas à pas
 ```

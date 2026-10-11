@@ -9,3 +9,6 @@ target/
 
 # Fichiers système macOS
 .DS_Store
+
+# --- le journal des parties, ecrit par GameHub a chaque lancement (G.35)
+parties.txt

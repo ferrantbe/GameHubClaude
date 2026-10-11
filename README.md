@@ -56,7 +56,7 @@ recueil à héberger cinq outils qui ne le concernaient pas.
 
 ```
 python3 _outils/diagrammes_gamehub.py       les diagrammes
-python3 _outils/etats_gamehub.py --verifier  compile les 34 états
+python3 _outils/etats_gamehub.py --verifier  compile les 35 états
 python3 _outils/depot_gamehub.py            le dépôt Git
 node _outils/build_gamehub.js               les énoncés
 node _outils/build_gamehub_solutions.js     le corrigé final

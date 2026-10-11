@@ -196,7 +196,9 @@ const ETAPES = [
   ["G.33", "Le Nim dans une fenêtre", ["fenetre/FenetreNim.java", "fenetre/LanceurFenetreNim.java"],
    "Pile, ReglesNim et les stratégies servent sans une ligne changée. JeuNim, lui, ne sert pas : sa boucle est devenue un tour par clic."],
   ["G.34", "Des boutons qui savent quand se taire", ["fenetre/FenetreNim.java"],
-   "Une propriété suit la pile, et chaque bouton se désactive par un binding. La règle est écrite une fois par bouton, dans aucun gestionnaire."]
+   "Une propriété suit la pile, et chaque bouton se désactive par un binding. La règle est écrite une fois par bouton, dans aucun gestionnaire."],
+  ["G.35", "Un journal qui survit", ["observateurs/JournalParties.java", "GameHub.java"],
+   "Une ligne par partie, ajoutée à la fin d'un fichier texte, relue au lancement suivant. Une erreur d'écriture est signalée, jamais fatale."]
 ];
 
 const DIAGRAMMES = {

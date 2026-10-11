@@ -6,9 +6,11 @@ import be.ephec.gamehub.jeux.JeuFactory;   //@G.15
 import be.ephec.gamehub.modele.Joueur;
 import be.ephec.gamehub.modele.Partie;
 import be.ephec.gamehub.modele.ResultatPartie;   //@G.15
+import be.ephec.gamehub.modele.ResumePartie;   //@G.35
 import be.ephec.gamehub.modele.TypeJeu;   //@G.6
 import be.ephec.gamehub.observateurs.JournalParties;   //@G.13
 
+import java.util.List;   //@G.35
 import java.util.Scanner;
 
 /**
@@ -20,18 +22,21 @@ import java.util.Scanner;
  *
  * Ajouter un jeu ne demande aucune ligne ici.
  *
- * ATTENTION — L'APPEL A JAVAFX. Depuis G.22, le catalogue contient un jeu
- * graphique. Lancer une fenetre JavaFX exige que la plateforme soit
- * demarree, ce qui n'est pas le cas dans un programme console ordinaire.
- * C'est une des consequences annoncees du choix fait en G.22 : voir la
- * justification en tete de JeuDemineur, et le mot sur le Lanceur dans le
- * memento technique.
+ * AUCUNE FENETRE ICI. Le hub est une application console, et il le reste.
+ * La fenetre du Nim (G.33) est une application a part, avec son propre
+ * lanceur : l'ouvrir depuis ce menu demanderait de demarrer JavaFX a la
+ * main, sur un autre fil d'execution.
+ *
+ * G.35 : le hub ne joue qu'une partie par lancement. C'est le journal,
+ * ecrit dans un fichier, qui se souvient des precedentes.
  */
 //@G.3
 public class GameHub {
 
     public static void main(String[] args) {
         Scanner clavier = new Scanner(System.in);
+        JournalParties journal = new JournalParties();   //@G.35
+        afficherHistorique(journal);   //@G.35
 
         Joueur joueur1 = demanderJoueur(clavier, "premier");
         Joueur joueur2 = demanderJoueur(clavier, "second");
@@ -47,7 +52,8 @@ public class GameHub {
 
         //@G.3-G.6 Partie partie = new Partie(joueur1, joueur2);
         Partie partie = new Partie(joueur1, joueur2, type);   //@G.7
-        partie.ajouterObservateur(new JournalParties());   //@G.13
+        //@G.13-G.34 partie.ajouterObservateur(new JournalParties());
+        partie.ajouterObservateur(journal);   //@G.35
 
         System.out.println("\n" + partie);
 
@@ -56,6 +62,23 @@ public class GameHub {
 
         System.out.println("\n" + partie);
         System.out.println("Resume : " + partie.getResume());   //@G.9
+    }
+
+    /**   //@G.35
+     * G.35 — les parties des lancements precedents, relues dans le fichier   //@G.35
+     * du journal. Au tout premier lancement, il n'y en a aucune.   //@G.35
+     */   //@G.35
+    //@G.35
+    private static void afficherHistorique(JournalParties journal) {
+        List<ResumePartie> parties = journal.historique();
+        if (parties.isEmpty()) {
+            System.out.println("Aucune partie jouee jusqu'ici.");
+            return;
+        }
+        System.out.println("Parties precedentes :");
+        for (ResumePartie resume : parties) {
+            System.out.println("  " + resume);
+        }
     }
 
     private static Joueur demanderJoueur(Scanner clavier, String rang) {

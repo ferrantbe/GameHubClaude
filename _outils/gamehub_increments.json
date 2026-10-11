@@ -250,5 +250,13 @@
     "fichiers": [
       "fenetre/FenetreNim.java"
     ]
+  },
+  "G.35": {
+    "titre": "Un journal qui survit",
+    "resume": "Le journal ecrit chaque partie terminee dans un fichier texte, une ligne par partie, et GameHub relit ce fichier au lancement suivant pour afficher l'historique.",
+    "fichiers": [
+      "observateurs/JournalParties.java",
+      "GameHub.java"
+    ]
   }
 }

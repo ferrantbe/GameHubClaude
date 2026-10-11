@@ -97,7 +97,8 @@ g.push(tableau(["Incréments", "Ce qu'ils mettent en œuvre"], [
   ["G.28", "quand l'abstraction ne suffit plus"],
   ["G.29 et G.30", "héritage bien placé : deux jeux de grille, un seul algorithme"],
   ["G.31 et G.32", "généricité et lambdas : une paire qui a un sens, une fabrique sans switch"],
-  ["G.33 et G.34", "JavaFX : le Nim dans une fenêtre, puis des boutons liés à la pile"]
+  ["G.33 et G.34", "JavaFX : le Nim dans une fenêtre, puis des boutons liés à la pile"],
+  ["G.35", "fichiers : un journal qui survit à l'arrêt du programme"]
 ], [2600, 6760], [0]));
 g.push(saut());
 
@@ -874,11 +875,63 @@ g.push(bullet("Pourquoi tous les boutons sont-ils grisés à la fin, alors que v
 g.push(bullet("La propriété vit dans la fenêtre, pas dans Pile. Qu'aurait-on gagné, et perdu, à la mettre dans Pile ?"));
 g.push(bullet("Les touches 1, 2 et 3 ignorent les boutons grisés. Votre programme reste-t-il juste ? Qu'est-ce qui le protège ?"));
 
+
+// =====================================================================
+g.push(saut());
+g.push(h1("Neuvième partie — une mémoire"));
+
+increment("G.35", "Un journal qui survit");
+g.push(h2("Ce qui manque"));
+g.push(runs([
+  "Depuis ", { t: "G.13", code: true },
+  ", GameHub a un journal. Mais il ne garde rien : il compte les coups d'une partie et les annonce sur la console. Et le hub ne joue qu'une partie par lancement. Quand le programme s'arrête, tout ce qu'il savait disparaît."
+]));
+g.push(h2("Ce qu'on vous demande"));
+g.push(runs([
+  "Faites écrire au journal chaque partie terminée, sur une ligne, à la fin d'un fichier texte, ",
+  { t: "parties.txt", code: true },
+  ". Puis, au lancement suivant, faites relire ce fichier par GameHub, qui affiche les parties précédentes avant de proposer la suivante."
+]));
+g.push(tableau(["Dans JournalParties", "Ce qu'il fait"], [
+  ["un champ, le nom du fichier", "« parties.txt » par défaut ; un second constructeur en accepte un autre"],
+  ["onFin", "ajoute la ligne de la partie terminée, à la fin du fichier"],
+  ["historique()", "relit le fichier et rend la liste des ResumePartie qu'il contient"]
+], [3200, 6160], [0]));
+g.push(h2("Le format, à décider avant d'écrire"));
+g.push(runs([
+  "Une ligne par partie, quatre champs séparés par un point-virgule : le type, le gagnant, le début, la fin. Écrivez le type par son ",
+  { t: "nom de constante", b: true }, ", ", { t: "NIM", code: true },
+  ", et non par son libellé : c'est le nom que ", { t: "valueOf", code: true },
+  " sait relire. Les dates s'écrivent et se relisent telles quelles, par ",
+  { t: "toString", code: true }, " et ", { t: "LocalDateTime.parse", code: true }, "."
+]));
+g.push(...code([
+  "NIM;alice;2026-10-11T14:02:17.512;2026-10-11T14:03:40.088"
+]));
+g.push(h2("Deux règles"));
+g.push(runs([
+  "Ouvrez le fichier en ", { t: "ajout", b: true },
+  " : chaque partie s'ajoute aux précédentes, elle ne les remplace pas. Et fermez-le quoi qu'il arrive, par un ",
+  { t: "try", code: true }, " avec ressources."
+]));
+g.push(runs([
+  "Une erreur d'écriture ne doit pas faire perdre la partie qu'on vient de jouer : signalez-la, et laissez le hub continuer. Au tout premier lancement, le fichier n'existe pas encore, et l'historique est simplement vide. Voir ",
+  { t: "CC-ERR.2", code: true }, "."
+]));
+g.push(h2("Vérification"));
+g.push(bullet("au premier lancement, GameHub annonce qu'aucune partie n'a été jouée ;"));
+g.push(bullet("après deux parties, deux lancements, le troisième les affiche toutes les deux, dans l'ordre ;"));
+g.push(bullet("le fichier parties.txt s'ouvre dans un éditeur de texte, et se lit sans le programme."));
+g.push(h2("Questions à se poser"));
+g.push(bullet("Que se passe-t-il si un joueur choisit un pseudo qui contient un point-virgule ? Comment s'en protéger ?"));
+g.push(bullet("Une ligne abîmée, coupée en plein milieu ou modifiée à la main, fait-elle échouer tout l'historique ? Faut-il l'ignorer, ou s'arrêter ?"));
+g.push(bullet("Le thème FIC montre aussi les flux d'objets. Auriez-vous pu écrire la liste des résumés d'un coup ? Qu'auriez-vous perdu ?"));
+
 g.push(saut());
 g.push(h1("La vue d'ensemble"));
 g.push(p("Au terme du fil rouge, huit packages. Les flèches se lisent « dépend de » : remarquez qu'aucune ne remonte vers le hub, et qu'aucun package de jeu n'en connaît un autre."));
 diagramme("ensemble.png", "Ajouter un jeu, c'est ajouter un package et un cas dans la fabrique. Rien d'autre.");
-g.push(p("C'est le résultat de trente-quatre incréments, et la seule chose qu'il faut en retenir : une dépendance qu'on n'a pas créée est une dépendance qu'on n'aura pas à défaire."));
+g.push(p("C'est le résultat de trente-cinq incréments, et la seule chose qu'il faut en retenir : une dépendance qu'on n'a pas créée est une dépendance qu'on n'aura pas à défaire."));
 
 Packer.toBuffer(doc(g, "Fil rouge GameHub")).then(b => {
   fs.writeFileSync(__dirname + "/../_documents/GameHub_enonces.docx", b);

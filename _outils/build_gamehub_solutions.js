@@ -407,6 +407,20 @@ classe(`${RACINE}/fenetre/LanceurFenetreNim.java`);
 s.push(saut());
 
 // =====================================================================
+s.push(h1("Neuvième partie — une mémoire"));
+
+increment("G.35", "Un journal qui survit");
+s.push(runs([
+  { t: "Un PrintWriter sur un FileWriter ouvert en ajout. ", b: true },
+  "Le second paramètre de FileWriter, true, est toute la différence entre un journal et un fichier qui ne garde que la dernière partie."
+]));
+s.push(p("L'écriture rattrape son IOException et la signale : un observateur ne peut pas la laisser passer, puisque onFin ne la déclare pas, et la partie qu'on vient de jouer n'a pas à échouer pour autant. La lecture fait de même, et un fichier absent n'est pas une erreur : c'est le premier lancement."));
+s.push(p("Le corrigé ne protège ni contre un pseudo qui contient un point-virgule, ni contre une ligne abîmée : ce sont les deux premières questions de l'énoncé, et les réponses se discutent."));
+classe(`${RACINE}/observateurs/JournalParties.java`);
+classe(`${RACINE}/GameHub.java`);
+s.push(saut());
+
+// =====================================================================
 s.push(h1("Les classes de test"));
 s.push(p("Trois classes de test accompagnent le corrigé. Elles ne sont pas demandées par les énoncés, mais elles démontrent ce que les incréments cherchent à faire comprendre."));
 
