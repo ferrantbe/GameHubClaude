@@ -1,0 +1,11 @@
+# Dépôt d'exemple généré par _outils/depot_gamehub.py (contient son propre .git)
+depot/
+
+# Compilation Maven
+target/
+
+# Fichiers de module IntelliJ
+*.iml
+
+# Fichiers système macOS
+.DS_Store
