@@ -97,22 +97,10 @@ def construire(destination):
     git(destination, "config", "user.name", "Fil rouge GameHub")
     git(destination, "config", "user.email", "gamehub@ephec.local")
 
-    (destination / "README.md").write_text(
-        "# GameHub — le fil rouge, version par version\n\n"
-        "Chaque incrément est un commit, marqué d'une étiquette. Le fichier\n"
-        "`ETAPE.md` vous dit, à chaque version, ce que l'incrément demandait.\n\n"
-        "```\n"
-        "git tag --sort=v:refname       la liste des versions, dans l'ordre\n"
-        "git checkout G.7              le projet tel qu'il était à G.7\n"
-        "git diff G.6 G.7              ce que l'incrément G.7 a ajouté\n"
-        "git checkout main             revenir à la version finale\n"
-        "```\n\n"
-        "**Si vous n'avez jamais utilisé Git**, lisez d'abord\n"
-        "`_documents/Git_pour_GameHub.docx`. Quatre gestes suffisent, et le\n"
-        "document explique quoi faire quand ça coince.\n\n"
-        "Ce dépôt est **généré** à partir du corrigé annoté. Ne le modifiez\n"
-        "pas : la prochaine génération écraserait vos changements.\n",
-        encoding="utf-8")
+    # Le README de l'etudiant vit a la racine du projet de travail, sous un
+    # nom qui dit qu'il est publie : il se relit et se corrige comme un
+    # fichier, sans toucher au script.
+    shutil.copy(RACINE / "README_publiable.md", destination / "README.md")
     git(destination, "add", ".")
     git(destination, "commit", "-q", "-m", "Le depot, avant le premier increment")
 
