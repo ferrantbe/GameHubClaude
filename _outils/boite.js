@@ -174,7 +174,7 @@ function modeEmploi(c, theme, lignes) {
     { t: "src/main/java", code: true },
     " se compile d'un seul bloc. Un exercice laissé à moitié écrit empêche donc de lancer ",
     { t: "tous", i: true },
-    " les autres, y compris ceux des séances précédentes."
+    " les autres, y compris ceux des modules précédents."
   ]));
   c.push(runs([
     { t: "Prenez-en une habitude, et non une contrainte. ", b: true },

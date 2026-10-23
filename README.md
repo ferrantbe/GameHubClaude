@@ -47,7 +47,7 @@ disponible. `etats_gamehub.py --verifier` les signale et les saute ailleurs.
 Le fil rouge n'obéit pas aux mêmes règles. Sa numérotation est séquentielle et
 non thématique — `G.7` vient après `G.6` parce qu'il en dépend, là où `EXC.3`
 peut tomber n'importe quand. Il traverse toute l'année au lieu d'appartenir à
-une séance. Et il produit ses propres artefacts, dont un dépôt Git.
+un module. Et il produit ses propres artefacts, dont un dépôt Git.
 
 Les mélanger obligeait `livrer.py` à faire une exception pour lui, et le
 recueil à héberger cinq outils qui ne le concernaient pas.

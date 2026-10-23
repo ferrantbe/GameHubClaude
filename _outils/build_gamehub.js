@@ -153,6 +153,17 @@ g.push(runs([
   { t: "IDE.21", code: true },
   " du guide."
 ]));
+// Le module PKG vient apres ABS et ITF (16/10/2026) : G.5 le precede.
+// Ce qu'il faut savoir des packages pour G.5 tient en deux phrases.
+g.push(runs([
+  "Le module ",
+  { t: "PKG", code: true },
+  " viendra plus tard, et ce déplacement n'en demande qu'une chose : une classe utilisée depuis un autre package doit être ",
+  { t: "public", code: true },
+  ", ainsi que son constructeur et les méthodes qu'on y appelle. Si IntelliJ signale après le déplacement qu'un élément « n'est pas public », ajoutez ce mot ; ",
+  { t: "PKG", code: true },
+  " expliquera pourquoi."
+]));
 
 diagramme("g05.png", "Deux packages. Les flèches en pointillé se lisent « dépend de ».");
 
@@ -214,7 +225,7 @@ g.push(runs([
 ]));
 g.push(encadre([
   [{ t: "Cet incrément sera remis en cause", b: true }],
-  ["La conception retenue ici — une classe abstraite, une méthode jouer() sans paramètre ni résultat — sera remplacée dès la séance suivante par une interface Jeu de signature différente."],
+  ["La conception retenue ici — une classe abstraite, une méthode jouer() sans paramètre ni résultat — sera remplacée dès le module suivant, ITF, par une interface Jeu de signature différente."],
   ["Ce n'est pas un accident de parcours : c'est la vie normale d'une conception. Faites-le quand même, et gardez-en le souvenir. La comparaison des deux vaut plus que l'une des deux."]
 ]));
 
@@ -431,7 +442,7 @@ g.push(encadre([
 ]));
 g.push(h2("Où vous en êtes"));
 g.push(p("Relisez GameHub. Il ne connaît aucune classe concrète de jeu, aucune stratégie, aucune règle. Il demande, configure, lance et affiche. Ajouter un jeu au catalogue demande désormais une valeur dans TypeJeu, une classe, et un cas dans la fabrique — et pas une ligne ici."));
-g.push(p("C'est ce que les trois séances précédentes servaient à construire. Les incréments qui suivent vont s'appuyer dessus, puis le mettre en défaut."));
+g.push(p("C'est ce que les modules précédents servaient à construire. Les incréments qui suivent vont s'appuyer dessus, puis le mettre en défaut."));
 diagramme("g20.png", "Le jeu de Nim au complet. JeuNim ne connaît aucune stratégie concrète : il en reçoit deux, et les fait travailler.");
 g.push(saut());
 

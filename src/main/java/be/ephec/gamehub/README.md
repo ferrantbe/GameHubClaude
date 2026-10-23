@@ -6,7 +6,7 @@ fichiers** : les deux ne peuvent pas diverger. Si vous modifiez une classe,
 relancez `node build_gamehub_solutions.js`.
 
 Ce paquet n'est **pas** livré par `livrer.py` : le fil rouge traverse toute
-l'année et ne se rattache à aucune séance. Distribuez-le quand vous le jugez
+l'année et ne se rattache à aucun module. Distribuez-le quand vous le jugez
 utile.
 
 ## La renumérotation
