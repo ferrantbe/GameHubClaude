@@ -12,3 +12,7 @@ target/
 
 # --- le journal des parties, ecrit par GameHub a chaque lancement (G.35)
 parties.txt
+
+# --- les archives de livraison par seance, refabricables
+livraisons/
+__pycache__/

@@ -1,0 +1,133 @@
+{
+  "_commentaire": "Livraison du fil rouge par module (24/10/2026), numerotee comme les decks et les archives d'exercices. L'archive d'un module contient la correction de tous les increments des modules precedents : c'est le point de depart du module. Les increments d'un module sont ceux que les etudiants ecrivent pendant ce module. La derniere archive, GameHub_fin.zip, contient la correction finale.",
+  "modules": [
+    {
+      "num": 2,
+      "module": "POO",
+      "increments": [
+        "G.1",
+        "G.2",
+        "G.3"
+      ]
+    },
+    {
+      "num": 3,
+      "module": "TMP",
+      "increments": [
+        "G.4"
+      ]
+    },
+    {
+      "num": 4,
+      "module": "TAB",
+      "increments": [
+        "G.5"
+      ]
+    },
+    {
+      "num": 5,
+      "module": "ENU",
+      "increments": [
+        "G.6",
+        "G.7",
+        "G.8",
+        "G.9"
+      ]
+    },
+    {
+      "num": 6,
+      "module": "ABS",
+      "increments": [
+        "G.10"
+      ]
+    },
+    {
+      "num": 7,
+      "module": "ITF",
+      "increments": [
+        "G.11",
+        "G.12",
+        "G.13",
+        "G.14"
+      ]
+    },
+    {
+      "num": 8,
+      "module": "PKG",
+      "increments": [
+        "G.15",
+        "G.16",
+        "G.17",
+        "G.18",
+        "G.19",
+        "G.20"
+      ]
+    },
+    {
+      "num": 9,
+      "module": "COL",
+      "increments": [
+        "G.21",
+        "G.22",
+        "G.23"
+      ]
+    },
+    {
+      "num": 10,
+      "module": "EXC",
+      "increments": [
+        "G.24",
+        "G.25",
+        "G.26",
+        "G.27"
+      ]
+    },
+    {
+      "num": 11,
+      "module": "JUN",
+      "increments": [
+        "G.28",
+        "G.29",
+        "G.30"
+      ]
+    },
+    {
+      "num": 12,
+      "module": "GEN",
+      "increments": [
+        "G.31"
+      ]
+    },
+    {
+      "num": 13,
+      "module": "LAM",
+      "increments": [
+        "G.32"
+      ]
+    },
+    {
+      "num": 14,
+      "module": "FX",
+      "increments": [
+        "G.33",
+        "G.34"
+      ]
+    },
+    {
+      "num": 15,
+      "module": "FIC",
+      "increments": [
+        "G.35"
+      ]
+    },
+    {
+      "num": 16,
+      "module": "fin",
+      "increments": []
+    }
+  ],
+  "tests": {
+    "StrategieNimTest.java": "G.19",
+    "BatailleTest.java": "G.27"
+  }
+}

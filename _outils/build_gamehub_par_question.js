@@ -85,7 +85,7 @@ function diagramme(f, legende) {
   const largeur = Math.min(600, t[0] / 2.2);
   s.push(new Paragraph({
     spacing: { before: 180, after: 50 }, alignment: AlignmentType.CENTER,
-    children: [new ImageRun({ data: fs.readFileSync(chemin),
+    children: [new ImageRun({ type: "png", data: fs.readFileSync(chemin),
       transformation: { width: Math.round(largeur), height: Math.round(largeur * t[1] / t[0]) } })]
   }));
   s.push(new Paragraph({

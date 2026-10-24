@@ -225,3 +225,21 @@ emplacement. C'est voulu, pour pouvoir relire le texte avant d'avoir les images.
 Elle part **avec le dépôt** : `depot_gamehub.py` la joint au dernier commit,
 et le README du dépôt y renvoie. Le document qui explique le dépôt voyage donc
 dedans.
+
+
+## La livraison aux étudiants, module par module (24/10/2026)
+
+    python3 _outils/livrer_gamehub.py --verifier   compile chaque état livré
+    python3 _outils/livrer_gamehub.py --toutes     les quinze archives, dans livraisons/
+    python3 _outils/livrer_gamehub.py COL          l'archive du module COL
+
+Les étudiants gèrent deux projets : `GameHub`, le leur, et `GameHub_correction`,
+la correction officielle. L'archive d'un module (`GameHub_Module09_COL.zip`,
+numérotée comme les decks et les archives d'exercices) contient un dossier
+racine `GameHub_correction/`, avec la correction de tous les incréments des
+modules précédents, c'est-à-dire le point de départ du module. Le module POO
+reçoit un projet vide, et `GameHub_fin.zip` la correction finale. Le README de
+l'archive explique aux étudiants comment gérer les deux projets.
+
+Les modules et leurs incréments sont dans `_outils/livraisons_gamehub.json`,
+ainsi que l'incrément à partir duquel chaque classe de test compile.

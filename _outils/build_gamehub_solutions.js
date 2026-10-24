@@ -83,6 +83,7 @@ function diagramme(fichier, legende) {
   s.push(new Paragraph({
     spacing: { before: 180, after: 50 }, alignment: AlignmentType.CENTER,
     children: [new ImageRun({
+      type: "png",   // sans type, docx ecrit une image .undefined, que python-docx refuse
       data: fs.readFileSync(chemin),
       transformation: { width: Math.round(largeur), height: Math.round(largeur * taille[1] / taille[0]) }
     })]

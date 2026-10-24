@@ -29,6 +29,7 @@ function diagramme(fichier, legende) {
     spacing: { before: 200, after: 60 },
     alignment: AlignmentType.CENTER,
     children: [new ImageRun({
+      type: "png",   // sans type, docx ecrit une image .undefined, que python-docx refuse
       data: fs.readFileSync(chemin),
       transformation: { width: Math.round(largeur), height: Math.round(hauteur) }
     })]
