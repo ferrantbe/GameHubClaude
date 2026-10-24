@@ -14,5 +14,4 @@ target/
 parties.txt
 
 # --- les archives de livraison par seance, refabricables
-_moodle/archives/
 __pycache__/
